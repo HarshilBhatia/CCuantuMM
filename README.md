@@ -6,7 +6,7 @@ The official implementation of the paper "Ccuantum: Cycle-Consistent Quantum-Hyb
 [Project Page](https://4dqv.mpi-inf.mpg.de/QRNG/)
 
 
-[Harshil Bhatia <sup> 1,2 </sup>](https://scholar.google.com/citations?user=8rU1AaQAAAAJ&hl=en), [Edith Tretschk <sup>2</sup>](https://people.mpi-inf.mpg.de/~tretschk/), [Zorah L\"{a}hner <sup> 3 </sup>](), [Marcel Seelbach Benkner <sup> 3 </sup>](), [Michael M\"{o}ller <sup> 3 </sup>]() [Christian Theobalt<sup>2</sup>](https://people.mpi-inf.mpg.de/~theobalt/) and [Vladislav Golyanik <sup>2</sup>](https://people.mpi-inf.mpg.de/~golyanik/)
+[Harshil Bhatia<sup>1,2</sup>](https://scholar.google.com/citations?user=8rU1AaQAAAAJ&hl=en), [Edith Tretschk<sup>2</sup>](https://people.mpi-inf.mpg.de/~tretschk/), [Zorah Lähner<sup>3</sup>](https://zorah.github.io/), [Marcel Seelbach Benkner<sup>3</sup>](https://www.vsa.informatik.uni-siegen.de/en/seelbach-marcel), [Michael Möller<sup>3</sup>](https://sites.google.com/site/michaelmoellermath/), [Christian Theobalt<sup>2</sup>](https://people.mpi-inf.mpg.de/~theobalt/) and [Vladislav Golyanik<sup>2</sup>](https://people.mpi-inf.mpg.de/~golyanik/)
 
 <sup>1</sup> Indian Institute of Technology, Jodhpur , <sup>2</sup>Max Planck Institute for Informatics, <sup> 3 </sup> University of Siegen.
 
@@ -36,7 +36,7 @@ If you find our work useful in your research, please consider citing:
 ```
 @inproceedings{bhatia2022ccuantumm,
  title = {CCuantumm: },
- author = {Bhatia, Harshil and Tretschk, Edith and L\"{a}hner, Zorah and Benkner,Marcel and M\"{o}ller, Michael and Theobalt, Christian and Golyanik, Vladislav },
+ author = {Bhatia, Harshil and Tretschk, Edith and Lähner, Zorah and Benkner, Marcel and Möller, Michael and Theobalt, Christian and Golyanik, Vladislav },
  year = {2023},
  booktitle = {{IEEE Conference on Computer Vision and Pattern Recognition (CVPR)}},
  keywords = {Shape Analysis, Geometry Processing, Shape Correspondence, Multi Shape Matching},
