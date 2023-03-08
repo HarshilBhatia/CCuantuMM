@@ -30,6 +30,18 @@ The next step is to configure access to the Leap's Solvers. To achieve this, the
 
 For more information related to the configuration please refer to this [guide](https://docs.ocean.dwavesys.com/en/stable/overview/sapi.html#sapi-access)
 
+###Running 
+Once the environment has been configured, we can run a 10 shape instance of the FAUST dataset on the first class using the following command 
+```
+python Main.py --dataset FAUST --classvalue 0 --num_shapes 10
+```
+
+To run the same instance on the Quantum Annealer:
+```
+python Main.py --dataset FAUST --classvalue 0 --num_shapes 10 --nrWorst 20 --qpu --num_reads 200
+```
+
+
 ## Citation 
 If you find our work useful in your research, please consider citing:
 
@@ -49,4 +61,3 @@ Permission is hereby granted, free of charge, to any person or company obtaining
 Packaging or distributing parts or whole of the provided software (including code, models and data) as is or as part of other software is prohibited. Commercial use of parts or whole of the provided software (including code, models and data) is strictly prohibited. Using the provided software for promotion of a commercial entity or product, or in any other manner which directly or indirectly results in commercial gains is strictly prohibited.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-n a Quantum Annealer'.
