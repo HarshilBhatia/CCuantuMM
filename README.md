@@ -1,14 +1,12 @@
-# CCuantuMM: Cycle-Consistent Quantum-Hybrid Matching of Multiple Shapes
-The official implementation of the paper "CcuantuMM: Cycle-Consistent Quantum-Hybrid Matching of Multiple Shapes" (CVPR 2023)
+# CCuantuMM: Cycle-Consistent Quantum-Hybrid Matching of Multiple Shapes (CVPR 2023)
+ 
+[Harshil Bhatia<sup>1,2</sup>](https://scholar.google.com/citations?user=8rU1AaQAAAAJ&hl=en), [Edith Tretschk<sup>2</sup>](https://people.mpi-inf.mpg.de/~tretschk/), [Zorah Lähner<sup>3</sup>](https://zorah.github.io/), [Marcel Seelbach Benkner<sup>3</sup>](https://www.vsa.informatik.uni-siegen.de/en/seelbach-marcel), [Michael Möller<sup>3</sup>](https://sites.google.com/site/michaelmoellermath/), [Christian Theobalt<sup>2</sup>](https://people.mpi-inf.mpg.de/~theobalt/) and [Vladislav Golyanik<sup>2</sup>](https://people.mpi-inf.mpg.de/~golyanik/)
+
+<sup>1</sup> Indian Institute of Technology, Jodhpur , <sup>2</sup>Max Planck Institute for Informatics, <sup> 3 </sup> University of Siegen.
 
 [Paper]() | 
 [Code](https://github.com/HarshilBhatia/CCuantum) | 
 [Project Page](https://4dqv.mpi-inf.mpg.de/QRNG/)
-
-
-[Harshil Bhatia<sup>1,2</sup>](https://scholar.google.com/citations?user=8rU1AaQAAAAJ&hl=en), [Edith Tretschk<sup>2</sup>](https://people.mpi-inf.mpg.de/~tretschk/), [Zorah Lähner<sup>3</sup>](https://zorah.github.io/), [Marcel Seelbach Benkner<sup>3</sup>](https://www.vsa.informatik.uni-siegen.de/en/seelbach-marcel), [Michael Möller<sup>3</sup>](https://sites.google.com/site/michaelmoellermath/), [Christian Theobalt<sup>2</sup>](https://people.mpi-inf.mpg.de/~theobalt/) and [Vladislav Golyanik<sup>2</sup>](https://people.mpi-inf.mpg.de/~golyanik/)
-
-<sup>1</sup> Indian Institute of Technology, Jodhpur , <sup>2</sup>Max Planck Institute for Informatics, <sup> 3 </sup> University of Siegen.
 
 <img src="teaser.png" alt="teaser image" />
 
