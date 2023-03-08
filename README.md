@@ -1,5 +1,5 @@
-# CCuantum
-The official implementation of the paper "Ccuantum: Cycle-Consistent Quantum-Hybrid Matching of Multiple Shapes" (CVPR 2023)
+# CCuantuMM: Cycle-Consistent Quantum-Hybrid Matching of Multiple Shapes
+The official implementation of the paper "CcuantuMM: Cycle-Consistent Quantum-Hybrid Matching of Multiple Shapes" (CVPR 2023)
 
 [Paper]() | 
 [Code](https://github.com/HarshilBhatia/CCuantum) | 
@@ -30,7 +30,7 @@ The next step is to configure access to the Leap's Solvers. To achieve this, the
 
 For more information related to the configuration please refer to this [guide](https://docs.ocean.dwavesys.com/en/stable/overview/sapi.html#sapi-access)
 
-###Running 
+### Running 
 Once the environment has been configured, we can run a 10 shape instance of the FAUST dataset on the first class using the following command 
 ```
 python Main.py --dataset FAUST --classvalue 0 --num_shapes 10
@@ -41,13 +41,14 @@ To run the same instance on the Quantum Annealer:
 python Main.py --dataset FAUST --classvalue 0 --num_shapes 10 --nrWorst 20 --qpu --num_reads 200
 ```
 
+Note: This repository contains precomputed geodesics and point descriptors for a subsampled version of the [FAUST](http://faust.is.tue.mpg.de/. ) Dataset with one-to-one correspondences.
 
 ## Citation 
 If you find our work useful in your research, please consider citing:
 
 ```
-@inproceedings{bhatia2022ccuantumm,
- title = {CCuantumm: },
+@inproceedings{bhatia2022CCuantuMM,
+ title = {CCuantuMM: Cycle-Consistent Quantum-Hybrid Matching of Multiple Shapes},
  author = {Bhatia, Harshil and Tretschk, Edith and Lähner, Zorah and Benkner, Marcel and Möller, Michael and Theobalt, Christian and Golyanik, Vladislav },
  year = {2023},
  booktitle = {{IEEE Conference on Computer Vision and Pattern Recognition (CVPR)}},
