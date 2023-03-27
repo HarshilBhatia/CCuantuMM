@@ -14,7 +14,7 @@
 The code can be executed directly on [D-Wave's Leap IDE](https://www.dwavesys.com/take-leap) or locally by installing [D-Wave Ocean SDK]( https://docs.ocean.dwavesys.com/en/stable/)
 
 ### Installation
-If running the code locally, we recommend the user to create a virtual environment (optionally using conda)
+We recommend the user to create a virtual environment (optionally using conda)
 
 ```
 conda env create -n ocean
@@ -22,7 +22,7 @@ pip install dwave-ocean-sdk
 pip install pyqubo
 ```
 
-The next step is to configure access to the Leap's Solvers. To achieve this, the user needs to create an account to gain access (a free account provides upto 1 minute of QPU time) to the solvers and retrieve their respective API tokens. Now run, 
+Optionally, real quantum hardware can be used. First, we need to configure access to the Leap's Solvers. To achieve this, the user needs to create an account to gain access (a free account provides upto 1 minute of QPU time) to the solvers and retrieve their respective API tokens. Now run, 
 
 ``` dwave setup```
 
@@ -56,7 +56,14 @@ FAUSTLR
 └─── ...
 ```
 
-TRIV and VERT fields are not used by our algorithm, but are needed for visualisation purposes and are used to pre-compute the geodesics and descriptors.
+The dataset is organized into individual .mat files, each containing a single mesh model. 
+
+``` S/TRIV: ``` triangle vertices of the mesh
+``` S/VERT: ``` vertex positions of the mesh
+``` geodesics: ``` pre-computed geodesic distance field for each vertex of the mesh
+``` descriptors: ``` pre-computed heat-kernel descriptors for each vertex of the mesh
+
+Note: S/TRIV and S/VERT fields are not used by our algorithm, but are needed for visualisation purposes and are used to pre-compute the geodesics and descriptors.
 
 ## Citation 
 If you find our work useful in your research, please consider citing:
