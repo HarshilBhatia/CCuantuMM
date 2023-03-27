@@ -59,11 +59,14 @@ FAUSTLR
 The dataset is organized into individual .mat files, each containing a single mesh model. 
 
 ``` S/TRIV: ``` triangle vertices of the mesh
+
 ``` S/VERT: ``` vertex positions of the mesh
+
 ``` geodesics: ``` pre-computed geodesic distance field for each vertex of the mesh
+
 ``` descriptors: ``` pre-computed heat-kernel descriptors for each vertex of the mesh
 
-Note: S/TRIV and S/VERT fields are not used by our algorithm, but are needed for visualisation purposes and are used to pre-compute the geodesics and descriptors.
+Note: ``` S/TRIV ``` and ``` S/VERT ``` fields are not used by our algorithm, but are needed for visualisation purposes and are used to pre-compute the geodesics and descriptors.
 
 ## Citation 
 If you find our work useful in your research, please consider citing:
