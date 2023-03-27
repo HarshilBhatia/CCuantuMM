@@ -41,6 +41,23 @@ python Main.py --dataset FAUST --classvalue 0 --num_shapes 10 --nrWorst 20 --qpu
 
 Note: This repository contains precomputed geodesics and point descriptors for a subsampled version of the [FAUST](http://faust.is.tue.mpg.de/. ) Dataset with one-to-one correspondences.
 
+## Dataset
+We run our experiments on instances of FAUST, TOSCA and SMAL. 
+To run on custom data, configure each mesh in the following manner: 
+
+```
+FAUSTLR
+├───tr_reg_lr_000.mat
+|   ├─── S
+|   |    ├─── TRIV
+|   |    ├─── VERT
+|   ├─── geodesics
+|   ├─── descriptors
+└─── ...
+```
+
+TRIV and VERT fields are not used by our algorithm, but are needed for visualisation purposes and are used to pre-compute the geodesics and descriptors.
+
 ## Citation 
 If you find our work useful in your research, please consider citing:
 
