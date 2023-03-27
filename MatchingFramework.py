@@ -26,6 +26,21 @@ def getFuncTime(func):
 
 # @getFuncTime
 def calc_worst_match(cnt,C_XY,C_YZ,C_XZ,Xgeodesics,Ygeodesics,Zgeodesics):
+    """
+    Compute worst matches between the three shapes based on the count variable and input correspondences.
+    
+    Args:
+    - cnt: Integer count of the number of iterations.
+    - C_XY: Correspondences between the first and second shapes.
+    - C_YZ: Correspondences between the second and third shapes.
+    - C_XZ: Correspondences between the first and third shapes.
+    - Xgeodesics: Geodesic distances on the first shape.
+    - Ygeodesics: Geodesic distances on the second shape.
+    - Zgeodesics: Geodesic distances on the third shape.
+    
+    Returns:
+    - finalWorstVertices: Array of integers containing the worst matches between the three shapes.
+    """
     
     finalWorstVertices = np.zeros((2,config.args['nrWorst']),dtype = np.int64)
 
@@ -66,6 +81,16 @@ def calc_worst_match(cnt,C_XY,C_YZ,C_XZ,Xgeodesics,Ygeodesics,Zgeodesics):
 
 @jit(nopython = True,cache = True)
 def cij(ci,cj):
+    """
+    Computes the index map between two input correspondences.
+    
+    Args:
+    - ci: Correspondences between two shapes.
+    - cj: Correspondences between two shapes.
+    
+    Returns:
+    - C_ij: Correspondences between two shapes with index map computed.
+    """
     num_vertices = ci.shape[0]
     _cj = np.copy(ci[:,1])                            
     _cj[np.array([k for k in cj[:,1]],dtype = np.int64)] = np.arange(0,num_vertices,1,dtype = np.int64)
@@ -78,6 +103,18 @@ def cij(ci,cj):
 # @getFuncTime
 @jit(nopython = True,cache = True)
 def getEnergy(C,master,geodesics,num_shapes):
+    """
+    Computes the energy between shapes based on input correspondences, a master shape, and geodesic distances.
+    
+    Args:
+    - C: List of correspondences between shapes.
+    - master: Integer index of the master shape.
+    - geodesics: List of geodesic distances for all shapes.
+    - num_shapes: Integer number of shapes.
+    
+    Returns:
+    - energy: Array of floats containing the energy between shapes.
+    """
     itr = 0
     energy = np.zeros(int(num_shapes*(num_shapes-1)/2))
     
@@ -104,19 +141,63 @@ def getEnergy(C,master,geodesics,num_shapes):
 
 
 class MatchingFramework():
+    """
+    Class for performing shape matching using descriptors and geodesics.
+
+    Attributes:
+    descriptors(list): list of descriptors for each shape
+    geodesics(list): list of geodesic matrices for each shape
+
+    Methods:
+    __init__(self)
+        Initializes the MatchingFramework class.
+
+    loadDescriptors(self, Xdescriptors, Ydescriptors)
+        Loads the descriptors for two shapes and returns the linear sum assignment for them.
+
+    getMasterNode(self)
+        Returns the master node, i.e., the shape with the least sum of pairwise correspondences score.
+
+    perform_matching(self, C, geodesics, master, offset)
+        Performs shape matching using the given correspondence matrix, geodesics, master node, and offset.
+
+    initC(self)
+        Initializes the correspondence matrix.
+
+    computeVariance(self, max_geo)
+        Computes the variance of the geodesics.
+    """
     descriptors = []
     geodesics = [] 
 
     def __init__(self) -> None:
+        """
+        Initializes the MatchingFramework class.
+        """
         pass
     
     def loadDescriptors(self,Xdescriptors,Ydescriptors):
+        """
+        Loads the descriptors for two shapes and returns the linear sum assignment for them.
+
+        Args:
+        Xdescriptors(ndarray): the descriptors for the first shape
+        Ydescriptors(ndarray): the descriptors for the second shape
+
+        Returns:
+        ndarray: linear sum assignment for the two shapes
+        """
         softC = Xdescriptors.dot(Ydescriptors.transpose())
         rows, cols = linear_sum_assignment(-softC)
         return np.array([rows,cols]).transpose()
 
     def getMasterNode(self):
-        
+        """
+        Returns the master node, i.e., the shape with the least sum of energy.
+
+        Returns:
+        int: the master node index
+        """
         W = np.zeros((config.args['num_shapes'],config.args['num_shapes']))
         for i in range(config.args['num_shapes']):
             for j in range(i+1,config.args['num_shapes']):
@@ -132,8 +213,69 @@ class MatchingFramework():
         ids = np.argsort(val)
         return ids[0]
 
-    def perform_matching(self,C,geodesics,master,offset):
+    def initC(self):
+        """
+        Initializes the correspondence matrix.
+
+        Returns:
+        ndarray: the correspondence matrix
+        int: the index of the master node
+        """
+        if config.args['usedescriptors']:
+            master = self.getMasterNode()
+            C = np.zeros((config.args['num_shapes'],config.args['vertices'],2),dtype =np.int32)
+            
+            for i in range(config.args['num_shapes']):
+                if i != master: 
+                    C[i] = self.loadDescriptors(self.descriptors[i],self.descriptors[master])
+
+
+        if config.args['loadcorr']:
+            x = pickle.load(open(config.args['loadcorrpath'],'rb'))
+            master = x[1]
+            C = x[0]
+
         
+        return C,master
+
+    def computeVariance(self,max_geo):
+        """
+        Computes the variance of the geodesics.
+
+        Args:
+        max_geo(float): the maximum value of the geodesics
+
+        Returns:
+        ndarray: the variance of the geodesics
+        """
+        start = 0.25*max_geo
+        end = 0.05*max_geo
+    
+        n = int(config.args['steps']/9)
+
+        d = np.arange(n)
+
+        c = np.log(end/start)/((1/n-1))
+        k = start/(np.exp(c))
+        var_x = np.vectorize(lambda t: k*np.exp((1/(t+1))*c)) 
+        variance = var_x(d)
+        return variance
+    
+    def perform_matching(self,C,geodesics,master,offset):
+        """
+        Performs shape matching using the given correspondence matrix, geodesics, master node, and offset.
+
+        Args:
+        C(ndarray): the correspondence matrix
+        geodesics(list): list of geodesic matrices for each shape
+        master(int): the index of the master node
+        offset(int): the offset
+
+        Returns:
+        ndarray: the updated correspondence matrix
+        int: the updated offset
+        """
+
         nodes = np.arange(config.args['num_shapes'],dtype = np.int64)
         nodes = np.concatenate((nodes[:master],nodes[master+1:]))
 
@@ -201,41 +343,17 @@ class MatchingFramework():
 
         return C,offset + 1
 
-    def initC(self):
-        if config.args['usedescriptors']:
-            master = self.getMasterNode()
-            C = np.zeros((config.args['num_shapes'],config.args['vertices'],2),dtype =np.int32)
-            
-            for i in range(config.args['num_shapes']):
-                if i != master: 
-                    C[i] = self.loadDescriptors(self.descriptors[i],self.descriptors[master])
-
-
-        if config.args['loadcorr']:
-            x = pickle.load(open(config.args['loadcorrpath'],'rb'))
-            master = x[1]
-            C = x[0]
-
-        
-        return C,master
-
-    def computeVariance(self,max_geo):
-        start = 0.25*max_geo
-        end = 0.05*max_geo
-    
-        n = int(config.args['steps']/9)
-
-        d = np.arange(n)
-
-        c = np.log(end/start)/((1/n-1))
-        k = start/(np.exp(c))
-        var_x = np.vectorize(lambda t: k*np.exp((1/(t+1))*c)) 
-        variance = var_x(d)
-        return variance
-    
-    
     def match(self,shape_list = None):
-        
+        """
+        Matches shapes based on given arguments.
+
+        Args:
+        - self: an instance of the class.
+        - shape_list: a list of shape names. Defaults to None.
+
+        Returns:
+        - None.
+        """
         geodesics = []
         descriptors = []
 

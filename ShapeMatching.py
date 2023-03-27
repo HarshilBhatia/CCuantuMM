@@ -26,36 +26,45 @@ def getFuncTime(func):
     return wrapper
 
 @jit(nopython = True,cache = True)
-def getNextPairs(firstPairs):
+def getNextCycles(firstCycles):
+    """
+    Given a list of Cycles, generate a new list of Cycles by taking
+    elements from the previous list.
+
+    Args:
+    - firstCycles: A numpy array of Cycles.
+
+    Returns:
+    - nextCycles: A numpy array of Cycles.
+    """
     # exit()
-    nextPairs= np.zeros(firstPairs.shape,dtype = np.int64)
-    nextPairs[0,0],nextPairs[0,1] = firstPairs[0][0],firstPairs[1][1]
+    nextCycles= np.zeros(firstCycles.shape,dtype = np.int64)
+    nextCycles[0,0],nextCycles[0,1] = firstCycles[0][0],firstCycles[1][1]
     itr = 1 
-    if len(firstPairs)>2:
-        nextPairs[itr,0],nextPairs[itr,1] = firstPairs[0][1], firstPairs[2][1]  
+    if len(firstCycles)>2:
+        nextCycles[itr,0],nextCycles[itr,1] = firstCycles[0][1], firstCycles[2][1]  
         itr += 1
-        for k in range(2,len(firstPairs)-1):
-            nextPairs[itr,0], nextPairs[itr,1] = firstPairs[k-1][0], firstPairs[k+1][1]
+        for k in range(2,len(firstCycles)-1):
+            nextCycles[itr,0], nextCycles[itr,1] = firstCycles[k-1][0], firstCycles[k+1][1]
             itr += 1
 
-        nextPairs[itr,0],nextPairs[itr,1] = firstPairs[firstPairs.shape[0]-2][0], firstPairs[firstPairs.shape[0]-1][0]
+        nextCycles[itr,0],nextCycles[itr,1] = firstCycles[firstCycles.shape[0]-2][0], firstCycles[firstCycles.shape[0]-1][0]
     else:
-        nextPairs[itr,0],nextPairs[itr,1] = firstPairs[0][1],firstPairs[1][0] 
-    return nextPairs
+        nextCycles[itr,0],nextCycles[itr,1] = firstCycles[0][1],firstCycles[1][0] 
+    return nextCycles
 
     
-def cos(A, B): 
-    return (A*B).sum(axis=1) / (A*A).sum(axis=1) ** .5 / (B*B).sum(axis=1) ** .5
-
-def csm(A,B):
-    num=np.dot(A,B.T)
-    p1=np.sqrt(np.sum(A**2,axis=1))[:,np.newaxis]
-    p2=np.sqrt(np.sum(B**2,axis=1))[np.newaxis,:]
-    return num/(p1*p2)
-
 @jit(nopython = True,cache = True)
 def getCycleLists(worst_matches):
+    """
+    Given a list of worst matches, generate cycle lists.
 
+    Args:
+    - worst_matches: A numpy array of worst matches.
+
+    Returns:
+    - cycle_lists: A numpy array of cycle lists.
+    """
     N = len(worst_matches)
     elem_to_add = np.zeros((N//2,2),dtype = np.int64)
 
@@ -69,18 +78,30 @@ def getCycleLists(worst_matches):
     itr = 0
 
     cycle_lists[itr,:,:] = elem_to_add
-    currentPairs=getNextPairs(elem_to_add)
+    currentCycles=getNextCycles(elem_to_add)
 
     for _ in range(N-2):
         itr += 1
-        cycle_lists[itr] = currentPairs
-        currentPairs=getNextPairs(currentPairs)
+        cycle_lists[itr] = currentCycles
+        currentCycles=getNextCycles(currentCycles)
 
     return cycle_lists
 
 
 @jit(nopython = True,cache = True)
 def updatePermutationTable(perm,new_perm, upd_decision ):
+    """
+    Given permutation table and a new permutation table, update the permutation table based on
+    the update decision array.
+
+    Args:
+    - perm: A numpy array representing permutation table.
+    - new_perm: A numpy array representing new permutation table.
+    - upd_decision: A numpy array representing update decision.
+
+    Returns:
+    - result: A numpy array representing updated permutation table.
+    """
     result = np.copy(perm)
 
     for count, cycle in enumerate(new_perm):
