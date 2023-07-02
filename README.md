@@ -4,9 +4,10 @@
 
 <sup>1</sup> Indian Institute of Technology, Jodhpur , <sup>2</sup>Max Planck Institute for Informatics, <sup> 3 </sup> University of Siegen.
 
-[Paper]() | 
+[Arxiv](https://arxiv.org/pdf/2303.16202.pdf) | 
+[CVF](https://openaccess.thecvf.com/content/CVPR2023/papers/Bhatia_CCuantuMM_Cycle-Consistent_Quantum-Hybrid_Matching_of_Multiple_Shapes_CVPR_2023_paper.pdf) | 
 [Code](https://github.com/HarshilBhatia/CCuantum) | 
-[Project Page](https://4dqv.mpi-inf.mpg.de/QRNG/)
+[Project Page](https://4dqv.mpi-inf.mpg.de/CCuantuMM/)
 
 <img src="teaser.png" alt="teaser image" />
 
